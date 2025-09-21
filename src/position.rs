@@ -6,7 +6,6 @@ pub struct Position {
     pub y: i32,
 }
 
-
 impl std::ops::Add for Position {
     type Output = Self;
 

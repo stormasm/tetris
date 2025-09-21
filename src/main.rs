@@ -1,22 +1,23 @@
 use bevy::{
-    prelude::{default, App, PluginGroup, Startup, States, Commands, Camera2dBundle, ClearColor},
+    asset::AssetMetaCheck,
+    prelude::{default, App, Camera2dBundle, ClearColor, Commands, PluginGroup, Startup, States},
     window::{PresentMode, Window, WindowPlugin, WindowResolution},
-    DefaultPlugins, asset::AssetMetaCheck,
+    DefaultPlugins,
 };
 
-use constants::{WINDOW_HEIGHT, WINDOW_WIDTH, BACKGROUND_COLOR};
+use constants::{BACKGROUND_COLOR, WINDOW_HEIGHT, WINDOW_WIDTH};
 
 mod board;
 mod brick;
+mod common_entity;
 mod constants;
-mod menu;
-mod position;
-mod utils;
+mod data;
 mod game;
 mod gameover;
-mod common_entity;
-mod data;
+mod menu;
 mod menu_help;
+mod position;
+mod utils;
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 enum GameState {
@@ -24,7 +25,7 @@ enum GameState {
     Menu,
     Game,
     GameOver,
-    HelpMenu
+    HelpMenu,
 }
 
 fn main() {

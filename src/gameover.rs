@@ -1,9 +1,12 @@
-
-
 use bevy::{app::AppExit, prelude::*};
 
-use crate::{utils::{despawn_with_component, common_button_system}, constants::{BACKGROUND, TEXT_COLOR}, common_entity::EntitySpawner, GameState, game::GameScoresRes};
-
+use crate::{
+    common_entity::EntitySpawner,
+    constants::{BACKGROUND, TEXT_COLOR},
+    game::GameScoresRes,
+    utils::{common_button_system, despawn_with_component},
+    GameState,
+};
 
 #[derive(Component)]
 struct GameOverMenuScreen;
@@ -19,8 +22,7 @@ pub struct GameOverPlugin;
 
 impl Plugin for GameOverPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_systems(OnEnter(GameState::GameOver), gameover_menu_setup)
+        app.add_systems(OnEnter(GameState::GameOver), gameover_menu_setup)
             .add_systems(
                 OnExit(GameState::GameOver),
                 despawn_with_component::<GameOverMenuScreen>,
@@ -29,7 +31,11 @@ impl Plugin for GameOverPlugin {
     }
 }
 
-fn gameover_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>, game_scores_stored: Res<GameScoresRes>) {
+fn gameover_menu_setup(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    game_scores_stored: Res<GameScoresRes>,
+) {
     let font = asset_server.load("fonts/FiraSans-Bold.ttf");
 
     commands
@@ -75,7 +81,12 @@ fn gameover_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>, g
                         }),
                     );
 
-                    let game_score = format!("Score : {:}   Level : {:}   Lines : {:}", game_scores_stored.score, game_scores_stored.level, game_scores_stored.lines);
+                    let game_score = format!(
+                        "Score : {:}   Level : {:}   Lines : {:}",
+                        game_scores_stored.score,
+                        game_scores_stored.level,
+                        game_scores_stored.lines
+                    );
                     parent.spawn(
                         TextBundle::from_section(
                             game_score,
@@ -91,8 +102,18 @@ fn gameover_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>, g
                         }),
                     );
 
-                    parent.spawn_button(GameOverMenuButtonAction::Back, "right.png", "Main Menu", &asset_server);
-                    parent.spawn_button(GameOverMenuButtonAction::Quit, "exitRight.png", "Quit", &asset_server);
+                    parent.spawn_button(
+                        GameOverMenuButtonAction::Back,
+                        "right.png",
+                        "Main Menu",
+                        &asset_server,
+                    );
+                    parent.spawn_button(
+                        GameOverMenuButtonAction::Quit,
+                        "exitRight.png",
+                        "Quit",
+                        &asset_server,
+                    );
                 });
         });
 }

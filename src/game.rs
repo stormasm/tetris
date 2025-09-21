@@ -245,7 +245,10 @@ fn setup_tetris(mut commands: Commands, asset_server: Res<AssetServer>) {
     spawn_board(&mut commands, &Board::new());
     spawn_game_info(&mut commands, &asset_server);
     spawn_next_brick_title(&mut commands, &asset_server);
-    spawn_next_brick(&mut commands, Brick::new(ENABLE_7_BAG_RANDOMIZATION.load(Ordering::Relaxed)));
+    spawn_next_brick(
+        &mut commands,
+        Brick::new(ENABLE_7_BAG_RANDOMIZATION.load(Ordering::Relaxed)),
+    );
 }
 
 #[inline]
@@ -287,7 +290,10 @@ fn brick_fall_down_system(
 
     let create_new_next_brick_func = |commands: &mut Commands| {
         commands.entity(next_brick.0).despawn_recursive();
-        spawn_next_brick(commands, Brick::new(ENABLE_7_BAG_RANDOMIZATION.load(Ordering::Relaxed)));
+        spawn_next_brick(
+            commands,
+            Brick::new(ENABLE_7_BAG_RANDOMIZATION.load(Ordering::Relaxed)),
+        );
     };
 
     let Ok(mut moving_brick) = moving_brick_query.get_single_mut() else {

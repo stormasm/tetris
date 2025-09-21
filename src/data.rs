@@ -1,6 +1,5 @@
 use bevy::prelude::Resource;
 
-
 #[derive(Resource)]
 pub struct PauseStateRes {
     pub user_click_pause: bool,
