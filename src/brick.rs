@@ -61,6 +61,8 @@ impl Brick {
             _ => BrickType::J,
         };
 
+        println!("Brick Type: {:?}", brick_type);
+
         let brick_kind: &Vec<Brick> = BRICKS_MAP.get(&brick_type).unwrap();
         // choose a rotation type
         // let rotate_index: usize = rand::thread_rng().gen_range(0..brick_kind.len());
