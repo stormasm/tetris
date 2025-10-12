@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-use crate::constants::{PRESSED_BUTTON, HOVERED_PRESSED_BUTTON, HOVERED_BUTTON, NORMAL_BUTTON};
+use crate::constants::{HOVERED_BUTTON, HOVERED_PRESSED_BUTTON, NORMAL_BUTTON, PRESSED_BUTTON};
 
 // Generic system that takes a component as a parameter, and will despawn all entities with that component
 pub fn despawn_with_component<T: Component>(

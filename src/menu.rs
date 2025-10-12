@@ -1,5 +1,3 @@
-
-
 use bevy::{app::AppExit, prelude::*};
 
 use crate::{
@@ -147,8 +145,7 @@ fn menu_action(
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Pressed {
             match menu_button_action {
-                MenuButtonAction::Quit =>
-                {
+                MenuButtonAction::Quit => {
                     #[cfg(not(target_arch = "wasm32"))]
                     {
                         app_exit_events.send(AppExit);

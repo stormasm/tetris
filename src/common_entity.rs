@@ -1,17 +1,33 @@
-
-use bevy::{prelude::{Bundle, AssetServer, Res, default, Color, ChildBuilder, ButtonBundle, BuildChildren, ImageBundle, TextBundle}, ui::{Style, Val, UiRect, JustifyContent, AlignItems, PositionType, UiImage}, text::TextStyle};
-
+use bevy::{
+    prelude::{
+        default, AssetServer, BuildChildren, Bundle, ButtonBundle, ChildBuilder, Color,
+        ImageBundle, Res, TextBundle,
+    },
+    text::TextStyle,
+    ui::{AlignItems, JustifyContent, PositionType, Style, UiImage, UiRect, Val},
+};
 
 const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
 const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
 
-
 pub trait EntitySpawner {
-    fn spawn_button(&mut self, bundle: impl Bundle, icon_image_path: &'static str, title: &str, asset_server: &Res<AssetServer>);
+    fn spawn_button(
+        &mut self,
+        bundle: impl Bundle,
+        icon_image_path: &'static str,
+        title: &str,
+        asset_server: &Res<AssetServer>,
+    );
 }
 
 impl EntitySpawner for ChildBuilder<'_, '_, '_> {
-    fn spawn_button(&mut self, bundle: impl Bundle, icon_image_path: &'static str, title: &str, asset_server: &Res<AssetServer>) {
+    fn spawn_button(
+        &mut self,
+        bundle: impl Bundle,
+        icon_image_path: &'static str,
+        title: &str,
+        asset_server: &Res<AssetServer>,
+    ) {
         let font = asset_server.load("fonts/FiraSans-Bold.ttf");
         let button_style = Style {
             width: Val::Px(250.0),
@@ -32,23 +48,23 @@ impl EntitySpawner for ChildBuilder<'_, '_, '_> {
             font_size: 40.0,
             color: TEXT_COLOR,
         };
-        
+
         self.spawn((
-                            ButtonBundle {
-                                style: button_style,
-                                background_color: NORMAL_BUTTON.into(),
-                                ..default()
-                            },
-                            bundle,
-                        ))
-                        .with_children(|parent| {
-                            let icon = asset_server.load(icon_image_path);
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style,
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
-                            parent.spawn(TextBundle::from_section(title, button_text_style));
-                        });
+            ButtonBundle {
+                style: button_style,
+                background_color: NORMAL_BUTTON.into(),
+                ..default()
+            },
+            bundle,
+        ))
+        .with_children(|parent| {
+            let icon = asset_server.load(icon_image_path);
+            parent.spawn(ImageBundle {
+                style: button_icon_style,
+                image: UiImage::new(icon),
+                ..default()
+            });
+            parent.spawn(TextBundle::from_section(title, button_text_style));
+        });
     }
 }

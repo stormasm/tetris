@@ -1,7 +1,11 @@
-use bevy::{prelude::*};
+use bevy::prelude::*;
 
-use crate::{utils::{despawn_with_component, common_button_system}, constants::{BACKGROUND, TEXT_COLOR}, common_entity::EntitySpawner, GameState};
-
+use crate::{
+    common_entity::EntitySpawner,
+    constants::{BACKGROUND, TEXT_COLOR},
+    utils::{common_button_system, despawn_with_component},
+    GameState,
+};
 
 #[derive(Component)]
 struct MenuHelpScreen;
@@ -15,8 +19,7 @@ pub struct MenuHelpPlugin;
 
 impl Plugin for MenuHelpPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_systems(OnEnter(GameState::HelpMenu), help_menu_setup)
+        app.add_systems(OnEnter(GameState::HelpMenu), help_menu_setup)
             .add_systems(
                 OnExit(GameState::HelpMenu),
                 despawn_with_component::<MenuHelpScreen>,
@@ -71,13 +74,15 @@ fn help_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         }),
                     );
 
-                    let game_score = format!("
+                    let game_score = format!(
+                        "
                     Left : move left    \n
                     Right : move right                 \n
                     Up : rotate \n
                     Down : soft drop     \n
                     Space : hard drop      \n
-                    Esc : pause game       \n");
+                    Esc : pause game       \n"
+                    );
                     parent.spawn(
                         TextBundle::from_section(
                             game_score,
@@ -93,7 +98,12 @@ fn help_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         }),
                     );
 
-                    parent.spawn_button(GameOverMenuHelpButtonAction::Back, "right.png", "Back", &asset_server);
+                    parent.spawn_button(
+                        GameOverMenuHelpButtonAction::Back,
+                        "right.png",
+                        "Back",
+                        &asset_server,
+                    );
                 });
         });
 }
